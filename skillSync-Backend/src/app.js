@@ -37,6 +37,13 @@ app.use("/", userRouter);
 app.use("/", chatRouter);
 app.use("/", paymentRouter);
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "online",
+    message: "SkillSync Backend API is running successfully!",
+  });
+});
+
 const server = http.createServer(app);
 initializeSocket(server);
 

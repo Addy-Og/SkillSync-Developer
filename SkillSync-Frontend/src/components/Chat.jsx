@@ -46,7 +46,11 @@ const Chat = () => {
   useEffect(() => {
     if (!loggedInUser) return;
 
-    const socketInstance = io({ withCredentials: true });
+    const socketServerUrl =
+      location.hostname === "localhost"
+        ? undefined
+        : "https://skillsync-developer.onrender.com";
+    const socketInstance = io(socketServerUrl, { withCredentials: true });
     setSocket(socketInstance);
 
     socketInstance.emit("join_chat", { targetUserId });
