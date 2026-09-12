@@ -5,6 +5,12 @@ const { validateSignUpData } = require("../utils/validation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
+const COOKIE_OPTIONS = {
+  expires: new Date(Date.now() + 8 * 3600000),
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  secure: process.env.NODE_ENV === "production" ? true : false,
+};
+
 authRouter.post("/signup", async (req, res) => {
   try {
     // Validation of data
@@ -14,9 +20,8 @@ authRouter.post("/signup", async (req, res) => {
 
     // Encrypt the password
     const passwordHash = await bcrypt.hash(password, 10);
-    console.log(passwordHash);
 
-    //   Creating a new instance of the User model
+    // Creating a new instance of the User model
     const user = new User({
       firstName,
       lastName,
@@ -30,9 +35,7 @@ authRouter.post("/signup", async (req, res) => {
     const token = await savedUser.getJWT();
 
     // Set cookie
-    res.cookie("token", token, {
-      expires: new Date(Date.now() + 8 * 3600000),
-    });
+    res.cookie("token", token, COOKIE_OPTIONS);
 
     res.json({
       message: "User Added successfully!",
@@ -59,20 +62,19 @@ authRouter.post("/login", async (req, res) => {
     if (isPasswordValid) {
       const token = await user.getJWT();
 
-      res.cookie("token", token, {
-        expires: new Date(Date.now() + 8 * 3600000),
-      });
+      res.cookie("token", token, COOKIE_OPTIONS);
       res.send(user);
     } else {
       throw new Error("Invalid credentials");
     }
   } catch (err) {
-    res.status(400).send("ERROR : " + err.message);
+    res.status(400).send(err.message.replace(/^ERROR\s*:\s*/i, ""));
   }
 });
 
 authRouter.post("/logout", async (req, res) => {
   res.cookie("token", null, {
+    ...COOKIE_OPTIONS,
     expires: new Date(Date.now()),
   });
   res.send("Logout Successful!!");
