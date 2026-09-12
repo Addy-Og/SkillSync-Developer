@@ -1,5 +1,4 @@
 [build]
-  base = "SkillSync-Frontend"
   command = "npm run build"
   publish = "dist"
 
