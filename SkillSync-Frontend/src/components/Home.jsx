@@ -5,7 +5,7 @@ import Feed from "./Feed";
 const Home = () => {
   const user = useSelector((store) => store.user);
 
-  if (user) {
+  if (user && user._id) {
     return <Feed />;
   }
 
