@@ -65,29 +65,26 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-[82vh] items-center justify-center px-4 py-8">
-      <div className="w-full max-w-md bg-slate-900/80 border border-slate-800 rounded-2xl p-8 shadow-2xl backdrop-blur-sm">
+    <div className="flex min-h-[80vh] items-center justify-center px-4 py-12">
+      <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
         
         {/* Header */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary text-2xl font-bold mb-3">
-            ⚡
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">
-            {isLoginForm ? "Welcome back" : "Join SkillSync"}
+        <div className="mb-6">
+          <h1 className="text-xl font-bold text-white tracking-tight">
+            {isLoginForm ? "Sign in to SkillSync" : "Create your account"}
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-xs text-slate-400 mt-1">
             {isLoginForm
-              ? "Sign in to connect with fellow developers"
-              : "Create your profile and start matching skills"}
+              ? "Enter your credentials to access your account"
+              : "Fill in the details below to get started"}
           </p>
         </div>
 
         {/* Tab Switcher */}
-        <div className="grid grid-cols-2 p-1 bg-slate-800/60 rounded-xl mb-6 border border-slate-700/50">
+        <div className="grid grid-cols-2 p-1 bg-slate-800/80 rounded-lg mb-5 text-xs font-semibold">
           <button
             type="button"
-            className={`py-2 text-sm font-semibold rounded-lg transition-all ${
+            className={`py-1.5 rounded-md transition-all ${
               isLoginForm
                 ? "bg-primary text-white shadow-sm"
                 : "text-slate-400 hover:text-white"
@@ -101,7 +98,7 @@ const Login = () => {
           </button>
           <button
             type="button"
-            className={`py-2 text-sm font-semibold rounded-lg transition-all ${
+            className={`py-1.5 rounded-md transition-all ${
               !isLoginForm
                 ? "bg-primary text-white shadow-sm"
                 : "text-slate-400 hover:text-white"
@@ -115,43 +112,38 @@ const Login = () => {
           </button>
         </div>
 
-        {/* Error Alert */}
+        {/* Error Message */}
         {error && (
-          <div className="mb-5 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-medium flex items-center gap-2">
-            <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>{typeof error === "string" ? error : "An error occurred"}</span>
+          <div className="mb-4 p-2.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs">
+            {typeof error === "string" ? error : "An error occurred"}
           </div>
         )}
 
         {/* Form */}
-        <form onSubmit={isLoginForm ? handleLogin : handleSignUp} className="space-y-4">
+        <form onSubmit={isLoginForm ? handleLogin : handleSignUp} className="space-y-3.5">
           {!isLoginForm && (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2.5">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
+                <label className="block text-xs font-medium text-slate-300 mb-1">
                   First Name
                 </label>
                 <input
                   type="text"
-                  placeholder="John"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                  className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-primary transition-all"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">
+                <label className="block text-xs font-medium text-slate-300 mb-1">
                   Last Name
                 </label>
                 <input
                   type="text"
-                  placeholder="Doe"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                  className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-primary transition-all"
                   required
                 />
               </div>
@@ -159,36 +151,34 @@ const Login = () => {
           )}
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1.5">
+            <label className="block text-xs font-medium text-slate-300 mb-1">
               Email Address
             </label>
             <input
               type="email"
-              placeholder="alex@example.com"
               value={emailId}
               onChange={(e) => setEmailId(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+              className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-primary transition-all"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1.5">
+            <label className="block text-xs font-medium text-slate-300 mb-1">
               Password
             </label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all pr-12"
+                className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-primary transition-all pr-12"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 text-xs font-semibold px-1 py-0.5"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-[11px] font-medium"
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -198,7 +188,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 py-2.5 px-4 bg-primary hover:bg-primary/90 text-white font-semibold text-sm rounded-xl transition-all shadow-md active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full mt-2 py-2 px-4 bg-primary hover:bg-primary/90 text-white font-semibold text-xs rounded-lg transition-all shadow-sm active:scale-[0.99] disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {loading && <span className="loading loading-spinner loading-xs"></span>}
             {isLoginForm ? "Sign In" : "Create Account"}
@@ -206,17 +196,17 @@ const Login = () => {
         </form>
 
         {/* Footer Link */}
-        <p className="text-center text-xs text-slate-400 mt-6">
-          {isLoginForm ? "New to SkillSync?" : "Already have an account?"}{" "}
+        <p className="text-center text-xs text-slate-400 mt-5">
+          {isLoginForm ? "Don't have an account?" : "Already have an account?"}{" "}
           <button
             type="button"
             onClick={() => {
               setIsLoginForm(!isLoginForm);
               setError("");
             }}
-            className="text-primary hover:underline font-semibold ml-1"
+            className="text-primary hover:underline font-medium ml-0.5"
           >
-            {isLoginForm ? "Sign up now" : "Log in"}
+            {isLoginForm ? "Sign up" : "Sign in"}
           </button>
         </p>
       </div>
