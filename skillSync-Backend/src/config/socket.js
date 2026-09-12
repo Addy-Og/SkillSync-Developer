@@ -8,13 +8,22 @@ const onlineUsers = new Map();
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
-  process.env.FRONTEND_URL,
-].filter(Boolean);
+  "https://skillsyncdev.netlify.app",
+  "https://skillsync-developer.netlify.app",
+  ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL.replace(/\/$/, "")] : []),
+];
 
 const initializeSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: allowedOrigins,
+      origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        const cleanOrigin = origin.replace(/\/$/, "");
+        if (allowedOrigins.includes(cleanOrigin)) {
+          return callback(null, true);
+        }
+        return callback(null, origin);
+      },
       credentials: true,
     }
   });
