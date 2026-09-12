@@ -35,7 +35,11 @@ const Login = () => {
       dispatch(addUser(res.data));
       navigate("/");
     } catch (err) {
-      setError(err?.response?.data || "Invalid email or password.");
+      const serverErr = err?.response?.data;
+      const msg = typeof serverErr === "string" 
+        ? serverErr.replace(/^ERROR\s*:\s*/i, "")
+        : (serverErr?.message || "Invalid email or password.");
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -58,7 +62,11 @@ const Login = () => {
       dispatch(addUser(res.data.data));
       navigate("/profile");
     } catch (err) {
-      setError(err?.response?.data || "Sign up failed. Please check your details.");
+      const serverErr = err?.response?.data;
+      const msg = typeof serverErr === "string" 
+        ? serverErr.replace(/^ERROR\s*:\s*/i, "")
+        : (serverErr?.message || "Sign up failed. Please check your details.");
+      setError(msg);
     } finally {
       setLoading(false);
     }

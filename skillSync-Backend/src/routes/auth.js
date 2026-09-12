@@ -39,7 +39,10 @@ authRouter.post("/signup", async (req, res) => {
       data: savedUser,
     });
   } catch (err) {
-    res.status(400).send("ERROR : " + err.message);
+    if (err.code === 11000) {
+      return res.status(400).send("Email address is already registered.");
+    }
+    res.status(400).send(err.message);
   }
 });
 
